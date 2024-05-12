@@ -4,6 +4,7 @@ import com.ohgiraffers.dto.BookDTO;
 import com.ohgiraffers.dto.MemberDTO;
 import com.ohgiraffers.repository.MainRepository;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainService {
@@ -25,11 +26,25 @@ public class MainService {
 
     // 도서 관리 메서드
     public String bookRegistration() {
+        int bookQuantity = 0;
         // 도서명을 레파지토리 클래스로 넘기기
-        System.out.print("등록할 도서명을 입력해주세요: ");
-        bookName = scanner.nextLine();
-        result = mainRepository.bookRegistration(bookName);
-        System.out.println("등록이 완료 되었습니다.");
+        BookDTO books = new BookDTO();
+        try {
+            System.out.print("등록할 도서의 수량을 입력하세요: ");
+            bookQuantity = scanner.nextInt();
+            scanner.nextInt();
+            for (int i = 0; i < bookQuantity; i++) {
+                System.out.print("등록할 도서명을 입력해주세요: ");
+                bookName = scanner.nextLine();
+                books.setBookName(bookName);
+            }
+            result = mainRepository.bookRegistration(books);
+            System.out.println("등록이 완료 되었습니다.");
+        } catch (InputMismatchException e) {
+            System.out.println("잘못된 입력입니다.");
+        } finally {
+            scanner.close();
+        }
         return result;
     }
 
@@ -69,17 +84,30 @@ public class MainService {
         return mainRepository.bookDelete(bookName);
     }
 
-    public void registeredBookList() {
+    public String registeredBookList() {
         // 전체 도서 리스트 조회
-        mainRepository.registeredBookList();
+        return mainRepository.registeredBookList();
     }
 
     // 회원 관리 메서드
     public String memberRegistration() {
-        System.out.print("등록할 회원명을 입력해주세요: ");
-        memberName = scanner.nextLine();
-        result = mainRepository.memberRegistration(memberName);
-        System.out.println("등록이 완료 되었습니다.");
+        MemberDTO members = new MemberDTO();
+        try {
+            System.out.print("등록할 회원의 인원수를 입력하세요: ");
+            int memberQuantity = scanner.nextInt();
+            scanner.nextInt();
+            for (int i = 0; i < memberQuantity; i++) {
+                System.out.print("등록할 회원명을 입력해주세요: ");
+                memberName = scanner.nextLine();
+                members.setMemberName(memberName);
+            }
+            result = mainRepository.memberRegistration(members);
+            System.out.println("등록이 완료 되었습니다.");
+        } catch (InputMismatchException e) {
+            System.out.println("잘못된 입력입니다.");
+        } finally {
+            scanner.close();
+        }
         return result;
     }
 
@@ -119,8 +147,8 @@ public class MainService {
         // 삭제할 회원명을 레포지토리 클래스로 넘기기
     }
 
-    public void registeredMemberList() {
-        mainRepository.registeredMemberList();
+    public String registeredMemberList() {
+        return mainRepository.registeredMemberList();
     }
     // 도서 반납 메서드
     public void returnABook(int bookNum) {
