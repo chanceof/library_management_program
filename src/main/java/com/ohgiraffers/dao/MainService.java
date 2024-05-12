@@ -62,14 +62,16 @@ public class MainService {
 
     public String bookModify() {
         // 도서가 등록되어 있는지 검증
-        System.out.print("수정할 도서명을 입력해주세요: ");
+        System.out.print("수정대상인 도서명을 입력해주세요: ");
         bookName = scanner.nextLine();
         booleanResult = mainRepository.bookNameValid(bookName);
         if (!booleanResult) {
             System.out.println("등록되지 않은 도서입니다.");
         }
+        System.out.print("수정될 도서명을 입력해주세요: ");
+        String bookModifyName = scanner.nextLine();
         // 수정할 도서명을 레파지토리 클래스로 넘기기
-        return mainRepository.bookModify(bookName);
+        return mainRepository.bookModify(bookName, bookModifyName);
     }
 
     public String bookDelete() {
@@ -125,13 +127,15 @@ public class MainService {
 
     public String memberModify() {
         // 회원이 등록되어 있는지 검증
-        System.out.print("수정할 회원명을 입력해주세요: ");
+        System.out.print("수정대상인 회원명을 입력해주세요: ");
         memberName = scanner.nextLine();
         booleanResult = mainRepository.memberNameValid(memberName);
         if (!booleanResult) {
             System.out.println("등록되지 않은 도서입니다.");
         }
-        return mainRepository.memberModify(memberName);
+        System.out.print("수정될 회원명을 입력해주세요: ");
+        String memberModifyName = scanner.nextLine();
+        return mainRepository.memberModify(memberName, memberModifyName);
         // 수정할 회원명을 레포지토리 클래스로 넘기기
     }
 

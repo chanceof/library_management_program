@@ -78,7 +78,24 @@ public class MainRepository {
         return book.toString();
     }
 
-    public String bookModify(String bookName) {
+    public String bookModify(String bookName, String bookModifyName) {
+        int bookNum = -1;
+        for (int i = 0; i < bookDTO.size(); i++) {
+            BookDTO book = bookDTO.get(i);
+            if (book.getBookName().equals(bookName)) {
+                bookNum = i;
+                book.setBookName(bookModifyName);
+                break;
+            }
+        }
+        if (bookNum != -1) {
+            return "성공적으로 수정되었습니다.";
+        } else {
+            return "수정에 실패하였습니다.";
+        }
+    }
+
+    public String bookDelete(String bookName) {
         int bookNum = -1;
         for (int i = 0; i < bookDTO.size(); i++) {
             BookDTO book = bookDTO.get(i);
@@ -86,15 +103,13 @@ public class MainRepository {
                 bookNum = i;
                 break;
             }
-
-
         }
-
-        return result;
-    }
-
-    public String bookDelete(String bookName) {
-        return result;
+        if (bookNum != -1) {
+            bookDTO.remove(bookNum);
+            return "성공적으로 삭제 되었습니다.";
+        } else {
+            return "삭제에 실패하였습니다.";
+        }
     }
 
     public String registeredBookList(){
@@ -139,13 +154,38 @@ public class MainRepository {
         return member.toString();
     }
 
-    public String memberModify(String memberName) {
-
-        return result;
+    public String memberModify(String memberName, String memberModifyName) {
+        int memberNum = -1;
+        for (int i = 0; i < memberDTO.size(); i++) {
+            MemberDTO member = memberDTO.get(i);
+            if (member.getMemberName().equals(memberName)) {
+                memberNum = i;
+                member.setMemberName(memberModifyName);
+                break;
+            }
+        }
+        if (memberNum != -1) {
+            return "성공적으로 수정되었습니다.";
+        } else {
+            return "수정에 실패하였습니다.";
+        }
     }
 
     public String memberDelete(String memberName) {
-        return result;
+        int memberNum = -1;
+        for (int i = 0; i < memberDTO.size(); i++) {
+            MemberDTO member = memberDTO.get(i);
+            if (member.getMemberName().equals(memberNum)) {
+                memberNum = i;
+                break;
+            }
+        }
+        if (memberNum != -1) {
+            memberDTO.remove(memberNum);
+            return "성공적으로 삭제 되었습니다.";
+        } else {
+            return "삭제에 실패하였습니다.";
+        }
     }
 
     public String registeredMemberList(){
